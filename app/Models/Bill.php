@@ -21,14 +21,20 @@ class Bill extends Model
         'service_percent' => 'float',
     ];
 
-    public function group()      { return $this->belongsTo(Group::class); }
-    public function creator()    { return $this->belongsTo(User::class, 'created_by'); }
-    public function items()      { return $this->hasMany(BillItem::class); }
+    public function group()       { return $this->belongsTo(Group::class); }
+    public function creator()     { return $this->belongsTo(User::class, 'created_by'); }
+    public function items()       { return $this->hasMany(BillItem::class); }
     public function participants(){ return $this->hasMany(Participant::class); }
-    public function scans()      { return $this->hasMany(ReceiptScan::class); }
+    public function scans()       { return $this->hasMany(ReceiptScan::class); }
     public function splitResults(){ return $this->hasMany(SplitResult::class); }
     public function sharedLinks() { return $this->hasMany(SharedLink::class); }
-    public function exports()    { return $this->hasMany(Export::class); }
+    public function exports()     { return $this->hasMany(Export::class); }
+
+    // Fitur 3 — Categories
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'bill_category');
+    }
 
     public function getSubtotalAttribute(): float
     {
